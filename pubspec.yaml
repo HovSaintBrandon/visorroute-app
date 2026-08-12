@@ -1,0 +1,70 @@
+name: visorroute
+description: "VisorRoute - Field Station Supervision & Student Routing App"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+
+  # Routing
+  go_router: ^13.2.0
+
+  # Network & Persistence
+  dio: ^5.4.1
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Location & Navigation
+  geolocator: ^11.0.0
+
+  # File Picker & Utilities
+  # Pinned exactly: 11.0.0+ skips applying the Kotlin Android plugin under
+  # AGP 9+ (assuming AGP's "Built-in Kotlin"), which currently leaves
+  # FilePickerPlugin uncompiled in this project's Gradle setup. 10.3.3 is
+  # the last version that applies its own Kotlin plugin unconditionally.
+  file_picker: 10.3.3
+  intl: ^0.19.0
+  cupertino_icons: ^1.0.8
+
+  # Push Notifications
+  firebase_core: ^4.13.0
+  firebase_messaging: ^16.5.0
+  flutter_local_notifications: ^17.1.2
+
+  # Modern Styling
+  google_fonts: ^6.2.1
+  flutter_secure_storage: ^10.3.1
+  image_picker: ^1.2.3
+  path_provider: ^2.1.6
+  share_plus: ^12.0.2
+
+  # Note: HERE SDK Navigate Edition is integrated locally via path dependency.
+  # Developer note: Unzip here_sdk.tar.gz into plugins/here_sdk/ before enabling.
+  # here_sdk:
+  #   path: plugins/here_sdk
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/logo.png
