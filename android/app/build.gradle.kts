@@ -12,9 +12,12 @@ android {
     // the HERE SDK for Flutter Developer Guide's compatibility requirements for
     // HERE SDK 4.27.2.0 — bumping these with the SDK version if it's ever upgraded.
     compileSdk = 36
-    // ndkVersion intentionally removed — the HERE SDK's own guide says the NDK
-    // isn't needed when building with it, and flutter.ndkVersion was here only
-    // as the Flutter template default.
+    // HERE SDK itself doesn't need the NDK, but another plugin in this app
+    // (jni, a transitive dependency) does, at a specific version — a real
+    // build surfaced this (`flutter build apk` warned of a version mismatch
+    // against the auto-installed default). Pinned to what that plugin wants
+    // rather than flutter.ndkVersion's default.
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
