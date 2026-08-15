@@ -19,6 +19,7 @@ import '../../features/reports/presentation/reports_screen.dart';
 import '../../features/student_status/presentation/my_status_screen.dart';
 import '../../features/student_status/presentation/queue_position_screen.dart';
 import '../../features/notifications/presentation/notification_center_screen.dart';
+import '../../features/workstation_location/presentation/workstation_confirm_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authProvider);
@@ -131,6 +132,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/student/queue',
         builder: (context, state) => const QueuePositionScreen(),
+      ),
+      GoRoute(
+        path: '/student/confirm-location',
+        builder: (context, state) => const WorkstationConfirmScreen(),
       ),
       GoRoute(
         path: '/notifications',

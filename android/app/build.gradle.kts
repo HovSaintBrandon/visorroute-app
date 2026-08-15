@@ -8,8 +8,13 @@ plugins {
 
 android {
     namespace = "com.venuefy.visorroute"
+    // compileSdk/minSdk/targetSdk pinned to literals (not flutter.*Version) per
+    // the HERE SDK for Flutter Developer Guide's compatibility requirements for
+    // HERE SDK 4.27.2.0 — bumping these with the SDK version if it's ever upgraded.
     compileSdk = 36
-    ndkVersion = flutter.ndkVersion
+    // ndkVersion intentionally removed — the HERE SDK's own guide says the NDK
+    // isn't needed when building with it, and flutter.ndkVersion was here only
+    // as the Flutter template default.
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -22,8 +27,8 @@ android {
         applicationId = "com.venuefy.visorroute"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 24
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

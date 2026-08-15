@@ -30,6 +30,13 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- HERE SDK for Flutter can render incorrectly under Impeller (the
+             default rendering engine) on some devices — see Flutter issue
+             #152653. The HERE SDK Developer Guide's integration tutorial calls
+             out disabling it as a required workaround, not optional. -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="false" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

@@ -13,6 +13,11 @@ class Student {
   final VisitStatus status;
   final int queueIndex;
   final String estimatedTimeOfArrival;
+  /// Backend's `workStation.geocodeStatus`: 'pending' | 'confirmed' | 'failed' | 'manual'.
+  /// 'failed' is the signal to prompt this student to confirm their own
+  /// workplace location — see features/workstation_location.
+  final String geocodeStatus;
+  final String? workStationAddress;
 
   Student({
     required this.id,
@@ -25,6 +30,8 @@ class Student {
     required this.status,
     this.queueIndex = 0,
     this.estimatedTimeOfArrival = '',
+    this.geocodeStatus = 'pending',
+    this.workStationAddress,
   });
 
   /// Reads the real `GET /students/me` / `GET /students` doc shape:
@@ -52,6 +59,8 @@ class Student {
       ),
       queueIndex: json['queueIndex'] ?? 0,
       estimatedTimeOfArrival: json['estimatedTimeOfArrival'] ?? '',
+      geocodeStatus: workStation?['geocodeStatus'] ?? 'pending',
+      workStationAddress: workStation?['address'],
     );
   }
 
@@ -73,6 +82,8 @@ class Student {
         'status': status.name,
         'queueIndex': queueIndex,
         'estimatedTimeOfArrival': estimatedTimeOfArrival,
+        'geocodeStatus': geocodeStatus,
+        'workStationAddress': workStationAddress,
       };
 }
 

@@ -4,6 +4,11 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- HERE SDK for Flutter can render incorrectly under Impeller on some
+	     devices (Flutter issue #152653) — the HERE SDK Developer Guide's
+	     integration tutorial calls out disabling it as a required workaround. -->
+	<key>FLTEnableImpeller</key>
+	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

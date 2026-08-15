@@ -111,6 +111,45 @@ class MyStatusScreen extends ConsumerWidget {
                       ),
                     ),
 
+                    if (student.geocodeStatus == 'failed') ...[
+                      const SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.amber.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: Colors.amber.shade700),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.warning_amber_rounded, color: Colors.amber.shade900),
+                                const SizedBox(width: 10),
+                                const Expanded(
+                                  child: Text(
+                                    "We couldn't confidently locate your workplace on the map.",
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                                onPressed: () => context.push('/student/confirm-location'),
+                                icon: const Icon(Icons.map_outlined),
+                                label: const Text('Confirm my location'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+
                     const SizedBox(height: 20),
 
                     // Phone — the only editable field on this endpoint.

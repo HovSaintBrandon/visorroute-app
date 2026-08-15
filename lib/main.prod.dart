@@ -5,6 +5,7 @@ import 'core/config/app_config.dart';
 import 'core/theme/app_theme.dart';
 import 'core/storage/hive_boxes.dart';
 import 'core/router/app_router.dart';
+import 'core/here_sdk/here_sdk_init.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ void main() async {
     debugPrint('Firebase init skipped: $e');
   }
   await HiveBoxes.init();
+  await initializeHereSdk();
 
   runApp(const ProviderScope(child: VisorRouteApp()));
 }
