@@ -52,7 +52,7 @@ class _WorkstationConfirmScreenState extends ConsumerState<WorkstationConfirmScr
   void _flyTo(double lat, double lng) {
     final controller = _hereMapController;
     if (controller == null) return;
-    const measure = MapMeasure(MapMeasureKind.distanceInMeters, 300.0);
+    final measure = MapMeasure(MapMeasureKind.distanceInMeters, 300.0);
     controller.camera.lookAtPointWithMeasure(GeoCoordinates(lat, lng), measure);
   }
 

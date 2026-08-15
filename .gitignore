@@ -43,3 +43,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# HERE SDK — proprietary, licensed binary (~1GB, native iOS/Android
+# frameworks), distributed only via direct download from the HERE Developer
+# Portal, never via pub.dev. Must never be committed: it's not ours to
+# redistribute, and it would blow up repo size for every clone. Each
+# developer/CI machine unzips it locally per the HERE SDK for Flutter
+# Developer Guide's "Integrate the HERE SDK" tutorial.
+/plugins/here_sdk/
+/heresdk-*/
