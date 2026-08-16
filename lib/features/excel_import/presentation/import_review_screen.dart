@@ -87,6 +87,8 @@ class ImportReviewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final rowsAsync = ref.watch(importReviewRowsProvider(batchId));
+    final batch = ref.watch(importBatchProvider).batch;
+    final stillProcessing = batch?.status == 'parsing' || batch?.status == 'geocoding';
 
     return Scaffold(
       appBar: AppBar(
@@ -107,6 +109,7 @@ class ImportReviewScreen extends ConsumerWidget {
         ),
         data: (rows) {
           final needsReview = rows.where((r) => r.status == 'needs_review').toList();
+          final bannerColor = stillProcessing ? Colors.blue : Colors.amber;
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -115,17 +118,22 @@ class ImportReviewScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.amber.withOpacity(0.15),
+                    color: bannerColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: Colors.amber.shade700),
+                    border: Border.all(color: bannerColor.shade700),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.warning_amber_rounded, color: Colors.amber),
+                      if (stillProcessing)
+                        const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                      else
+                        const Icon(Icons.warning_amber_rounded, color: Colors.amber),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          '${rows.length - needsReview.length} of ${rows.length} rows ready. ${needsReview.length} need manual review.',
+                          stillProcessing
+                              ? 'Still processing — ${rows.length} of ${batch?.rowCount ?? rows.length} rows resolved so far. This updates automatically.'
+                              : '${rows.length - needsReview.length} of ${rows.length} rows ready. ${needsReview.length} need manual review.',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -186,7 +194,11 @@ class ImportReviewScreen extends ConsumerWidget {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: needsReview.isEmpty ? () => _commit(context, ref) : null,
+                    // Gated on !stillProcessing too, not just the currently-fetched
+                    // rows having zero needs_review — while the batch is still
+                    // resolving, "zero needs_review so far" can just mean later
+                    // rows haven't been reached yet, not that the batch is clean.
+                    onPressed: (needsReview.isEmpty && !stillProcessing) ? () => _commit(context, ref) : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: theme.primaryColor,
                       foregroundColor: Colors.white,
